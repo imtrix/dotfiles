@@ -37,11 +37,6 @@ export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
 # Node
 export PATH="$PATH:$(yarn global bin)"
-export NVM_DIR="$HOME/.nvm"
-source $(brew --prefix nvm)/nvm.sh
-
-# Ruby
-eval "$(rbenv init -)"
 
 # Python
 export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl/certs/ca-bundle.pem
