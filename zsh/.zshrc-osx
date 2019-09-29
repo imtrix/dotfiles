@@ -1,40 +1,18 @@
-# Load Antigen
-source $(brew --prefix)/share/antigen/antigen.zsh
+# Zplug
+source $(brew --prefix zplug)/init.zsh
 
-# Load the oh-my-zsh library
-antigen use oh-my-zsh
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-completions"
+zplug "bobsoppe/zsh-ssh-agent", use:ssh-agent.zsh, from:github
+zplug "bhilburn/powerlevel9k",  use:powerlevel9k.zsh-theme
+zplug "plugins/django",         from:oh-my-zsh
+zplug "plugins/git",            from:oh-my-zsh
+zplug "plugins/git-flow-avh",   from:oh-my-zsh
+zplug "plugins/tmux",           from:oh-my-zsh
 
-#
-# Antigen Bundles
-#
-
-antigen bundle adb                      # Android Debug Bridge
-antigen bundle aws                      # Amazon Web Services
-antigen bundle django                   # Django
-antigen bundle git                      # Git
-antigen bundle git-flow                 # Support for git-flow completions
-antigen bundle golang                   # Go
-antigen bundle npm                      # Node Package Manager
-antigen bundle nvm                      # Node Virtual Manager
-antigen bundle node                     # Node
-antigen bundle pip                      # Python Package Manager
-antigen bundle python                   # Python
-antigen bundle sbt                      # Simple Build Tool (Scala)
-antigen bundle scala                    # Scala
-antigen bundle ssh-agent                # Auto start SSH Agent
-antigen bundle tmux                     # Tmux stuff
-antigen bundle tmuxinator               # Tmux stuff (I guess...)
-antigen bundle virtualenvwrapper        # Python Virtual Environment Manager
-
-# Third party bundles
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions src
-
-# Themes
-antigen theme bhilburn/powerlevel9k powerlevel9k
-
-# Apply antigen stuff!
-antigen apply
+# Load zplug
+zplug load
 
 # Extra zsh-completions from Homebrew
 fpath=($(brew --prefix)/share/zsh-completions $fpath)
@@ -43,13 +21,14 @@ fpath=($(brew --prefix)/share/zsh-completions $fpath)
 # Powerlevel9k settings
 #
 DEFAULT_USER=$USER
-POWERLEVEL9K_MODE="compatible"
+POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv context dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
 POWERLEVEL9K_SHOW_CHANGESET=true
 POWERLEVEL9K_CHANGESET_HASH_LENGTH=6
 POWERLEVEL9K_VIRTUALENV_BACKGROUND='white'
+
 AWS_DEFAULT_PROFILE="default"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
@@ -83,23 +62,44 @@ AWS_DEFAULT_PROFILE="default"
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+HISTSIZE=1000
+SAVEHIST=10000
+
+## History command configuration
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt inc_append_history     # add commands to HISTFILE in order of execution
+setopt share_history          # share command history data
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 #
 # Key bindings
+# http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets
 # See http://stackoverflow.com/a/29403520/1326249 for iTerm2 bindings
 #
-bindkey "^X\\x7f" backward-kill-line        # Fix for the non-working CMD-Backspace for deleting the line
+bindkey "^X\\x7f" backward-kill-line
+bindkey "^X\\x0b" kill-line
+bindkey "^K"  kill-whole-line
+bindkey "^[b" backward-word
+bindkey "^[f" forward-word
+bindkey "^[d" delete-word
+bindkey "^[[1;10D" beginning-of-line
+bindkey "^[[1;10C" end-of-line
+bindkey '^R' history-incremental-search-backward
+bindkey '^F' history-incremental-search-forward
 
-# if you do a 'rm *', Zsh will give you a sanity check!
-# setopt RM_STAR_WAIT
+setopt RM_STAR_WAIT             # If you do a 'rm *', Zsh will give you a sanity check!
 
-# Zsh has spelling corrector
-unsetopt autopushd
-unsetopt CORRECT
+unsetopt autopushd  # Normal pushd/popd behaviour
+unsetopt CORRECT    # Disable Zsh spelling corrector
 
+<<<<<<< HEAD:zsh/.zshrc
 # Need to set PATH here in order to make it work properly!
 export PATH="/usr/local/bin:$PATH"
 
@@ -109,3 +109,8 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=~/bin:$PATH
 export PATH="/usr/local/opt/gettext/bin:$PATH"
+=======
+# added by travis gem
+[ -f /Users/rolf/.travis/travis.sh ] && source /Users/rolf/.travis/travis.sh
+
+>>>>>>> upstream/master:zsh/.zshrc-osx
