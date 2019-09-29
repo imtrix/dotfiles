@@ -100,7 +100,12 @@ bindkey "^X\\x7f" backward-kill-line        # Fix for the non-working CMD-Backsp
 unsetopt autopushd
 unsetopt CORRECT
 
-# added by travis gem
-[ -f /Users/rolf/.travis/travis.sh ] && source /Users/rolf/.travis/travis.sh
+# Need to set PATH here in order to make it work properly!
+export PATH="/usr/local/bin:$PATH"
 
-export PATH="$HOME/.yarn/bin:$PATH"
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export ANDROID_SDK_ROOT=$ANDROID_HOME
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=~/bin:$PATH
+export PATH="/usr/local/opt/gettext/bin:$PATH"

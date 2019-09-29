@@ -13,32 +13,36 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"     # Default ssh key
 export LANG=no_NO.UTF-8                 # Language settings
 export LC_ALL=no_NO.UTF-8               # Language settings
 
+
+# Python
+export PATH="$(pyenv root)/shims:$PATH"
+
 # Java
-export JAVA_HOME=$(/usr/libexec/java_home)
+#export JAVA_HOME=$(/usr/libexec/java_home)
 
 # Scala
-export SCALA_HOME="$(brew --prefix)/opt/scala/idea"
-if [ "X$(which sbt)" != "X" ]; then
-    export SBT_OPTS="-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
-fi
+#export SCALA_HOME="$(brew --prefix)/opt/scala/idea"
+#if [ "X$(which sbt)" != "X" ]; then
+#    export SBT_OPTS="-XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
+#fi
 
 # Go
-export GOPATH="$HOME/Documents/workspace/golang"
-export PATH="$PATH:$GOPATH/bin:$(brew --prefix go)/libexec/bin"
+#export GOPATH="$HOME/Documents/workspace/golang"
+#export PATH="$PATH:$GOPATH/bin:$(brew --prefix go)/libexec/bin"
 
 # Qt5
-export PATH="$PATH:$(brew --prefix qt5)/bin"
+#export PATH="$PATH:$(brew --prefix qt5)/bin"
 
 # Android
-export ANDROID_HOME="/usr/local/share/android-sdk"
-export PATH="$PATH:$ANDROID_HOME/tools"
+#export ANDROID_HOME="/usr/local/share/android-sdk"
+#export PATH="$PATH:$ANDROID_HOME/tools"
 
 # Node
-export NVM_DIR="$HOME/.nvm"
-source $(brew --prefix nvm)/nvm.sh
+#export NVM_DIR="$HOME/.nvm"
+#source $(brew --prefix nvm)/nvm.sh
 
 # Ruby
-eval "$(rbenv init -)"
+#eval "$(rbenv init -)"
 
 export PATH="$PATH:$(yarn global bin)"
 
@@ -55,9 +59,9 @@ source $(brew --prefix z)/etc/profile.d/z.sh
 
 export ALTERNATE_EDITOR=""
 #export EDITOR="emacsclient -t"                  # $EDITOR should open in terminal
-export EDITOR="mvim -v"
+export EDITOR="vim"
 #export VISUAL="emacsclient -c -a emacs"         # $VISUAL opens in GUI with non-daemon as alternate
-export VISUAL="code"
+export VISUAL="atom"
 
 #
 # Aliases
@@ -75,43 +79,11 @@ alias mv="mv -v" 2>/dev/null
 alias tm="tmux" 2>/dev/null
 alias td="tmux detach" 2>/dev/null
 alias gs="git status" 2>/dev/null
-alias vim="mvim -v" 2>/dev/null
-alias e="emacsclient -t" 2>/dev/null
-alias ev="emacsclient -c -a emacs &" 2>/dev/null
+#alias vim="mvim -v" 2>/dev/null
+#alias e="emacsclient -t" 2>/dev/null
+#alias ev="emacsclient -c -a emacs &" 2>/dev/null
 
 
-#
-# Functions
-#
-
-
-#function docker-cleanup {
-#  #
-#  # Use `docker-cleanup --dry-run` to see what would
-#  # be deleted.
-#  #
-#  EXITED=$(docker ps -q -f status=exited)
-#  DANGLING=$(docker images -q -f "dangling=true")
-#
-#  if [ "$1" == "--dry-run" ]; then
-#    echo "==> Would stop containers:"
-#    echo $EXITED
-#    echo "==> And images:"
-#    echo $DANGLING
-#  else
-#    if [ -n "$EXITED" ]; then
-#      docker rm $EXITED
-#    else
-#      echo "No containers to remove."
-#    fi
-#    if [ -n "$DANGLING" ]; then
-#      docker rmi $DANGLING
-#    else
-#      echo "No images to remove."
-#    fi
-#  fi
-#}
 
 # Source secrets file
 source ~/.dotfiles/zsh/.zshenv-secrets
-
